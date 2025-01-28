@@ -21,7 +21,7 @@ namespace RunGroupWebApp.Data
                         {
                             Title = "Running Club 1",
                             Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first cinema",
+                            Description = "This is the description of the 1st club",
                             ClubCategory = ClubCategory.City,
                             Address = new Address()
                             {
@@ -34,7 +34,7 @@ namespace RunGroupWebApp.Data
                         {
                             Title = "Running Club 2",
                             Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first cinema",
+                            Description = "This is the description of the 2nd club",
                             ClubCategory = ClubCategory.Endurance,
                             Address = new Address()
                             {
@@ -47,7 +47,7 @@ namespace RunGroupWebApp.Data
                         {
                             Title = "Running Club 3",
                             Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first club",
+                            Description = "This is the description of the 3rd club",
                             ClubCategory = ClubCategory.Trail,
                             Address = new Address()
                             {
@@ -58,9 +58,9 @@ namespace RunGroupWebApp.Data
                         },
                         new Club()
                         {
-                            Title = "Running Club 3",
+                            Title = "Running Club 4",
                             Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first club",
+                            Description = "This is the description of the 4th club",
                             ClubCategory = ClubCategory.City,
                             Address = new Address()
                             {
@@ -81,7 +81,7 @@ namespace RunGroupWebApp.Data
                         {
                             Title = "Running Race 1",
                             Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first race",
+                            Description = "This is the description of the 1st race",
                             RaceCategory = RaceCategory.Marathon,
                             Address = new Address()
                             {
@@ -94,7 +94,7 @@ namespace RunGroupWebApp.Data
                         {
                             Title = "Running Race 2",
                             Image = "https://www.eatthis.com/wp-content/uploads/sites/4/2020/05/running.jpg?quality=82&strip=1&resize=640%2C360",
-                            Description = "This is the description of the first race",
+                            Description = "This is the description of the 2nd race",
                             RaceCategory = RaceCategory.Ultra,
                             AddressId = 5,
                             Address = new Address()
