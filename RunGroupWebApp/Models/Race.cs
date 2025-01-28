@@ -1,7 +1,6 @@
 ﻿using RunGroupWebApp.Data.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using RunGroupWebApp.Data;
 
 namespace RunGroupWebApp.Models
 {

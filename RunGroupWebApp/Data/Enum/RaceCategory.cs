@@ -1,4 +1,4 @@
-﻿namespace RunGroupWebApp.Data
+﻿namespace RunGroupWebApp.Data.Enum
 {
     public enum RaceCategory
     {
