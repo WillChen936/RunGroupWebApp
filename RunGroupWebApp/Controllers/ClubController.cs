@@ -1,25 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RunGroupWebApp.Data;
+using RunGroupWebApp.Repositories.Interfaces;
 
 namespace RunGroupWebApp.Controllers
 {
     public class ClubController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IClubRepository _context;
 
-        public ClubController(ApplicationDbContext context)
+        public ClubController(IClubRepository context)
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var clubs = _context.Clubs.ToList();
+            var clubs = await _context.GetAllAsync();
             return View(clubs);
         }
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            var club = _context.Clubs.Include(a => a.Address).FirstOrDefault(c => c.Id == id);
+            var club = await _context.GetByIdAsync(id);
             return View(club);
         }
     }
