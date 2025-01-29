@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RunGroupWebApp.Models;
 using RunGroupWebApp.Repositories.Interfaces;
 
 namespace RunGroupWebApp.Controllers
@@ -20,6 +21,20 @@ namespace RunGroupWebApp.Controllers
         {
             var club = await _context.GetByIdAsync(id);
             return View(club);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(Club club)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(club);
+            }
+            _context.Add(club);
+            return RedirectToAction("Index");
         }
     }
 }
