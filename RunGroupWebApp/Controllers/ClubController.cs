@@ -55,5 +55,63 @@ namespace RunGroupWebApp.Controllers
             ModelState.AddModelError("", "Photo upload failed");
             return View(clubViewModel);
         }
+        public async Task<IActionResult> Edit(int id)
+        {
+            var club = await _clubRepository.GetByIdAsync(id);
+            if (club == null) return View("Error");
+            
+            var clubViewModel = new ClubEditViewModel
+            {
+                Title = club.Title,
+                Description = club.Description,
+                AddressId = club.AddressId,
+                Address = club.Address,
+                URL = club.Image,
+                ClubCategory = club.ClubCategory
+            };
+
+            return View(clubViewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, ClubEditViewModel clubViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "Failed to edit club");
+                return View("Edit", clubViewModel);
+            }
+
+            var userClub = await _clubRepository.GetByIdAsyncNoTracking(id);
+            if (userClub != null)
+            {
+                try
+                {
+                    await _photoservice.DeletePhotoAsync(userClub.Image);
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Could not delete photo");
+                    return View(clubViewModel);
+                }
+                var photoResult = await _photoservice.AddPhotoAsync(clubViewModel.Image);
+                var club = new Club
+                {
+                    Id = id,
+                    Title = clubViewModel.Title,
+                    Description = clubViewModel.Description,
+                    Image = photoResult.Url.ToString(),
+                    AddressId = clubViewModel.AddressId,
+                    Address = clubViewModel.Address,
+                    ClubCategory = clubViewModel.ClubCategory
+                };
+
+                _clubRepository.Update(club);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(clubViewModel);
+            }
+        }
     }
 }

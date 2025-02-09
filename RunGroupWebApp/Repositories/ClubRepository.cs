@@ -18,9 +18,13 @@ namespace RunGroupWebApp.Repositories
             return await _context.Clubs.ToListAsync();
         }
 
-        public Task<Club> GetByIdAsync(int id)
+        public async Task<Club> GetByIdAsync(int id)
         {
-            return _context.Clubs.Include(a => a.Address).FirstAsync(c => c.Id == id);
+            return await _context.Clubs.Include(a => a.Address).FirstAsync(c => c.Id == id);
+        }
+        public async Task<Club> GetByIdAsyncNoTracking(int id)
+        {
+            return await _context.Clubs.Include(a => a.Address).AsNoTracking().FirstAsync(c => c.Id == id);
         }
 
         public async Task<IEnumerable<Club>> GetByCityAsync(string city)
