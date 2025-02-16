@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RunGroupWebApp.Models;
 using RunGroupWebApp.Repositories.Interfaces;
+using RunGroupWebApp.Services;
 using RunGroupWebApp.Services.Interfaces;
 using RunGroupWebApp.ViewModels;
 
@@ -9,12 +10,12 @@ namespace RunGroupWebApp.Controllers
     public class ClubController : Controller
     {
         private readonly IClubRepository _clubRepository;
-        private readonly IPhotoservice _photoservice;
+        private readonly IPhotoservice _photoService;
 
         public ClubController(IClubRepository clubRepository, IPhotoservice photoservice)
         {
             _clubRepository = clubRepository;
-            _photoservice = photoservice;
+            _photoService = photoservice;
         }
         public async Task<IActionResult> Index()
         {
@@ -35,7 +36,7 @@ namespace RunGroupWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _photoservice.AddPhotoAsync(clubViewModel.Image);
+                var result = await _photoService.AddPhotoAsync(clubViewModel.Image);
                 var club = new Club
                 {
                     Title = clubViewModel.Title,
@@ -86,14 +87,14 @@ namespace RunGroupWebApp.Controllers
             {
                 try
                 {
-                    await _photoservice.DeletePhotoAsync(userClub.Image);
+                    await _photoService.DeletePhotoAsync(userClub.Image);
                 }
                 catch
                 {
                     ModelState.AddModelError("", "Could not delete photo");
                     return View(clubViewModel);
                 }
-                var photoResult = await _photoservice.AddPhotoAsync(clubViewModel.Image);
+                var photoResult = await _photoService.AddPhotoAsync(clubViewModel.Image);
                 var club = new Club
                 {
                     Id = id,
@@ -124,6 +125,11 @@ namespace RunGroupWebApp.Controllers
         {
             var clubDetails = await _clubRepository.GetByIdAsync(id);
             if (clubDetails == null) return View("Error");
+
+            if (!string.IsNullOrEmpty(clubDetails.Image))
+            {
+                _ = _photoService.DeletePhotoAsync(clubDetails.Image);
+            }
 
             _clubRepository.Delete(clubDetails);
             return RedirectToAction("Index");

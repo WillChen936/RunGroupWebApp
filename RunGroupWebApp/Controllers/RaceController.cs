@@ -10,13 +10,13 @@ namespace RunGroupWebApp.Controllers
     public class RaceController : Controller
     {
         private readonly IRaceRepository _raceRepository;
-        private readonly IPhotoservice _photoservice;
+        private readonly IPhotoservice _photoService;
 
 
         public RaceController(IRaceRepository raceRepository, IPhotoservice photoservice)
         {
             _raceRepository = raceRepository;
-            _photoservice = photoservice;
+            _photoService = photoservice;
         }
         public async Task<IActionResult> Index()
         {
@@ -37,7 +37,7 @@ namespace RunGroupWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _photoservice.AddPhotoAsync(raceViewModel.Image);
+                var result = await _photoService.AddPhotoAsync(raceViewModel.Image);
                 var race = new Race
                 {
                     Title = raceViewModel.Title,
@@ -88,14 +88,14 @@ namespace RunGroupWebApp.Controllers
             {
                 try
                 {
-                    await _photoservice.DeletePhotoAsync(userRace.Image);
+                    await _photoService.DeletePhotoAsync(userRace.Image);
                 }
                 catch
                 {
                     ModelState.AddModelError("", "Could not delete photo");
                     return View(raceViewModel);
                 }
-                var photoResult = await _photoservice.AddPhotoAsync(raceViewModel.Image);
+                var photoResult = await _photoService.AddPhotoAsync(raceViewModel.Image);
                 var race = new Race
                 {
                     Id = id,
