@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using RunGroupWebApp.Data;
 using RunGroupWebApp.Helpers;
+using RunGroupWebApp.Models;
 using RunGroupWebApp.Repositories;
 using RunGroupWebApp.Repositories.Interfaces;
 using RunGroupWebApp.Services;
@@ -24,11 +27,18 @@ namespace RunGroupWebApp
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSession();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
 
             var app = builder.Build();
 
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
             {
+                Seed.SeedUsersAndRolesAsync(app).Wait();
                 Seed.SeedData(app);
             }
 
