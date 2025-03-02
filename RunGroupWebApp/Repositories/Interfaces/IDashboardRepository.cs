@@ -6,5 +6,9 @@ namespace RunGroupWebApp.Repositories.Interfaces
     {
         Task<List<Club>> GetAllUserClubsAsync();
         Task<List<Race>> GetAllUserRacesAsync();
+        Task<AppUser> GetUserByIdAsync(string id);
+        Task<AppUser> GetByIdNoTracking(string id);
+        bool Update(AppUser user);
+        bool Save();
     }
 }

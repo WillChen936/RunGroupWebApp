@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using RunGroupWebApp.Data;
 using RunGroupWebApp.Models;
 using RunGroupWebApp.Repositories.Interfaces;
@@ -27,6 +28,28 @@ namespace RunGroupWebApp.Repositories
             var currUser = _httpContextAccessor.HttpContext?.User.GetUserId();
             var userRaces = _context.Races.Where(r => r.AppUser.Id == currUser);
             return userRaces.ToList();
+        }
+
+        public async Task<AppUser> GetUserByIdAsync(string id)
+        {
+            return await _context.Users.FindAsync(id);
+        }
+
+        public async Task<AppUser> GetByIdNoTracking(string id)
+        {
+            return await _context.Users.Where(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync();
+        }
+
+        public bool Update(AppUser user)
+        {
+            _context.Users.Update(user);
+            return _context.SaveChanges() > 0;
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }
