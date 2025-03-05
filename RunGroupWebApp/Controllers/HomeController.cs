@@ -27,7 +27,7 @@ namespace RunGroupWebApp.Controllers
             var homeViewModel = new HomeViewModel();
             try
             {
-                string url = "http://ipinfo.io/118.150.85.81?token=aca9ba1c0fe9a7";
+                string url = "http://ipinfo.io?token=aca9ba1c0fe9a7";
                 var info = new WebClient().DownloadString(url);
                 ipInfo = JsonConvert.DeserializeObject<IPInfo>(info);
                 RegionInfo myRI = new RegionInfo(ipInfo.Country);
