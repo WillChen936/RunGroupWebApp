@@ -79,15 +79,14 @@ namespace RunGroupWebApp.Controllers
                 return RedirectToAction("Index");
             }
         }
-
         private void MapUserEdit(AppUser user, EditUserDashboardViewModel editViewModel, ImageUploadResult photoResult)
         {
             user.Id = editViewModel.Id;
-            user.Pace = editViewModel.Pace;
-            user.Mileage = editViewModel.Mileage;
-            user.ProfileImageUrl = photoResult.Url.ToString();
-            user.City = editViewModel.City;
-            user.State = editViewModel.State;
+            user.Pace = editViewModel.Pace ?? user.Pace;
+            user.Mileage = editViewModel.Mileage ?? user.Mileage;
+            user.ProfileImageUrl = photoResult.Url.ToString()?? user.ProfileImageUrl;
+            user.City = editViewModel.City?? user.City;
+            user.State = editViewModel.State?? user.State;
         }
     }
 }
